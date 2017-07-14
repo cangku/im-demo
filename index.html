@@ -6,14 +6,77 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>IM Demo</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <div id="app">
+        
+        <ul v-cloak>
+            <li v-for="userJoin in usersJoin">{{userJoin.username}}加入房间</li>
+        </ul>
+        <div class="mask" v-if="!numUsers">
+            <input type="text" v-model="username" @keyup.enter="login" />
+        </div>
+    </div>
+    <script src="/dist/vue.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io('http://localhost:3000/');
-        socket.emit('demo', 'hello world', (data) => {
-            console.log(data);
-        });
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                url: 'http://localhost:3333/',
+                socket: '',
+                username: '',
+                msgs: { },
+                numUsers: 0,
+                usersJoin: []
+            },
+            created() {
+                // cnblogs username
+                if(/www\.cnblogs\.com/.test(location.href)) {
+                    this.username = $('#tbCommentAuthor').val();
+                }
+                
+                this.socket = io(this.url);
+                this.login();
+                this.addEvent();
+            },
+            methods: {
+                login: login,
+                addUser: addUser,
+                addEvent() {
+                    userJoin.call(this);
+                }
+            }
+        })
+
+        // login 
+        function login() {
+            if(this.username) {
+                this.addUser();
+                
+                this.socket.on('login', (data) => {
+                    // 更新在线用户数消息
+                    this.numUsers = data.numUsers;
+                })
+            } else {
+                // 请输入用户名
+
+            }
+        }
+
+        // adduser
+        function addUser() {
+            this.socket.emit('add user', this.username)
+        }
+
+        // user joined 监听广播事件（除自己以外）
+        function userJoin() {
+            this.socket.on('user joined', (data) => {
+                // 更新在线用户数消息
+                this.usersJoin.push(data);
+            })
+        }
     </script>
 </body>
 </html>

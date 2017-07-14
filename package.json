@@ -13,6 +13,7 @@
   "author": "unofficial",
   "license": "MIT",
   "dependencies": {
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.0.3",
+    "vue": "^2.3.4"
   }
 }

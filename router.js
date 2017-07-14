@@ -11,7 +11,21 @@ exports.router = (req, res) => {
     } else if(req.url === '/favicon.ico') {
         res.writeHead(200, { 'Content-Type': 'image/x-icon' });
         // 读取文件
-        fs.readFile(`.${req.url}`, function(err, data) {
+        fs.readFile(`.${req.url}`, (err, data) => {
+            if(err) throw err;
+            res.end(data);
+        })
+    } else if(req.url === '/dist/vue.min.js') {
+        res.writeHead(200, { 'Content-Type': 'application/x-javascript' });
+        // 读取文件
+        fs.readFile(`./node_modules/vue${req.url}`, (err, data) => {
+            if(err) throw err;
+            res.end(data);
+        })
+    } else if(req.url === '/style.css') {
+        res.writeHead(200, { 'Content-Type': 'text/css' });
+        // 读取文件
+        fs.readFile(`.${req.url}`, (err, data) => {
             if(err) throw err;
             res.end(data);
         })

@@ -1,0 +1,24 @@
+[v-cloak] {
+  display: none;
+}
+ul {
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+#app {
+  min-height: 100%;
+  position: relative;
+}
+#app .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #333;
+}
