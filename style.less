@@ -1,13 +1,15 @@
 [v-cloak] {
     display: none;
 }
-ul {
+ul, li {
     margin: 0;
+    padding: 0;
 }
 html, body {
     height: 100%;
     padding: 0;
     margin: 0;
+    font-size: 40px;
 }
 
 #app {
@@ -20,5 +22,248 @@ html, body {
         width: 100%;
         height: 100%;
         background: #333;
+        z-index: 99;
+
+        input {
+            border: 0;
+            border-bottom: 1px solid #fff;
+            background: transparent;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            color: #fff;
+            outline: 0;
+            font-size: .5rem;
+            text-align: center;
+            padding: .3rem;
+        }
+    }
+}
+
+// IM
+@base: 40rem;
+@base-ff: 'PingFangSC Regular', 'Microsoft Yahei';
+audio, img {
+    max-width: 100%;
+}
+textarea {
+    font-family: @base-ff;
+}
+.clearfix() { 
+  &:before, &:after { 
+    content: " "; 
+    display: table; 
+  }
+  &:after { 
+    clear: both; 
+  } 
+}
+.scrollbar(@scrollbarBg: #FAFAFA, @scrollbarBorderBg: #d2d2d2, @scrollbarThumbBg: #D2D7E9) {
+    scrollbar-3dlight-color: @scrollbarBg;
+    scrollbar-highlight-color: @scrollbarBg;
+    scrollbar-highlight-size: 8rem / @base;
+    scrollbar-face-color: @scrollbarThumbBg;
+    scrollbar-arrow-color: @scrollbarBg;
+    &::-webkit-scrollbar {
+        background: @scrollbarBg;
+        border-left: 1rem / @base solid @scrollbarBorderBg;
+        border-right: 1rem / @base solid @scrollbarBorderBg;
+        width: 8rem / @base;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: @scrollbarThumbBg;
+        border-radius: 4rem / @base;
+    }
+}
+.button(@color) {
+    background: @color;
+    border: 0;
+    border-radius: 13rem / @base;
+    color: #FFF;
+    font-size: 12rem / @base;
+    height: 26rem / @base;
+    width: 68rem / @base;
+    outline: none;
+}
+.bg {
+    background: rgba(0, 0, 0, .6);
+    min-height: 100%;
+}
+
+.im {
+    background: #FFF;
+    border-radius: 10rem / @base;
+    font-family: @base-ff;
+    width: 800rem / @base;
+    height: 665rem / @base;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -665rem / @base / 2 0 0 -800rem / @base / 2;
+
+    .header {
+        box-sizing: border-box; // 
+        background: #EFF0F3;
+        border-bottom: 1rem / @base solid #d2d2d2;
+        border-top-left-radius: 6rem / @base;
+        border-top-right-radius: 6rem / @base;
+        color: #333;
+        font-size: 18rem / @base;
+        height: 57rem / @base;
+        padding: 24rem / @base 0 0 22rem / @base;
+    }
+
+    .body {
+        .clearfix();
+        height: 608rem / @base;
+        .list {
+            background: #FAFAFA;
+            border-bottom-left-radius: 10rem / @base;
+            float: left;
+            height: inherit;
+            overflow-y: scroll;
+            position: relative;
+            width: 233rem / @base;
+
+            // 滚动条样式
+            .scrollbar();
+            li {
+                border-bottom: 1rem / @base solid #d2d2d2;
+                cursor: pointer;
+                padding: 20rem / @base 0  20rem / @base 22rem / @base;
+                position: relative;
+                .clearfix();
+                .unreadmsg {
+                    width: 10rem / @base;
+                    height: 10rem / @base;
+                    background: #FF543D;
+                    border-radius: 5rem / @base;
+                    position: absolute;
+                    left: 62rem / @base;
+                    top: 20rem / @base;
+                }
+                .contact-info {
+                    float: left;
+                    margin-left: 20rem / @base;
+
+                    .nick {
+                        font-size: 16rem / @base;
+                        color: #333;
+                    }
+                    .tel {
+                        font-size: 14rem / @base;
+                        color: #777;
+                        margin-top: 5rem / @base;
+                    }
+                }
+                &:last-child {
+                    border: 0;
+                }
+                &.on {
+                    background: #F3F5F9;
+                }
+            }
+        }
+        .content {
+            float: left;
+            width: 567rem / @base;
+            .content-output, .content-input {
+                .clearfix();
+            }
+            .content-output {
+                border-bottom: 1rem / @base solid #D2D2D2;
+                ul {
+                    box-sizing: border-box;
+                    height: 418rem / @base;
+                    overflow-y: scroll;
+                    padding: 22rem / @base 0;
+                    width: 550rem / @base;
+                    .scrollbar(#FFF, #FFF, #D2D7E9);
+                    li {
+                        &:first-child {
+                            margin-top: -24rem / @base;
+                        }
+                        .clearfix();
+                        &.self {
+                            &>div {
+                                float: left;
+                                margin: 24rem / @base 0 0 22rem / @base;
+                                position: relative;
+                                .head-img {
+                                    position: absolute;
+                                    top: 50%;
+                                    left: 0;
+                                    margin-top: -25rem / @base;
+                                }
+                                .msg {
+                                    background: #F6F6F7;
+                                    border-radius: 8rem / @base;
+                                    color: #333;
+                                    font-size: 16rem / @base;
+                                    max-width: 270rem / @base;
+                                    margin-left: 40rem / @base;
+                                    padding: 13rem / @base 10rem / @base 13rem / @base 20rem / @base;
+                                }
+                            }
+                        }
+                        &>div {
+                            float: right;
+                            margin: 24rem / @base 22rem / @base 0 0;
+                            position: relative;
+                            .head-img {
+                                position: absolute;
+                                top: 50%;
+                                margin-top: -25rem / @base;
+                                right: 0;
+                            }
+                            .msg {
+                                background: #F6F6F7;
+                                border-radius: 8rem / @base;
+                                color: #333;
+                                font-size: 16rem / @base;
+                                max-width: 270rem / @base;
+                                margin-right: 40rem / @base;
+                                padding: 13rem / @base 20rem / @base 13rem / @base 10rem / @base;
+                            }
+                        }
+                    }
+                }
+            }
+            .content-input {
+                position: relative;
+                height: 190rem / @base;
+                .close {
+                    position: absolute;
+                    bottom: 30rem / @base;
+                    right: 124rem / @base;
+                    .button(#CFCFCF);
+                }
+                .send {
+                    position: absolute;
+                    bottom: 30rem / @base;
+                    right: 40rem / @base;
+                    .button(#0ACD79)
+                }
+                textarea {
+                    border: 0;
+                    box-sizing: border-box;
+                    border-bottom-right-radius: 12rem / @base;
+                    font-size: 16rem / @base;
+                    height: 65%;
+                    padding: 8rem / @base;
+                    resize:none;
+                    width: 100%;
+                    .scrollbar(#FFF, #FFF, #D2D7E9);
+                }
+            }
+        }
+        .head-img {
+            background: #333;
+            border-radius: 25rem / @base;
+            height: 50rem / @base;
+            width: 50rem / @base;
+            float: left;
+        }
     }
 }

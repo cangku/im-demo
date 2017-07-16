@@ -10,12 +10,42 @@
 </head>
 <body>
     <div id="app">
-        
-        <ul v-cloak>
-            <li v-for="userJoin in usersJoin">{{userJoin.username}}加入房间</li>
-        </ul>
         <div class="mask" v-if="!numUsers">
-            <input type="text" v-model="username" @keyup.enter="login" />
+            <input type="text" v-model="username" @keyup.enter="login" placeholder="输入昵称回车登录开始聊天" />
+        </div>
+        <div class="im">
+            <div class="header" v-cloak>
+                {{title}}
+            </div>
+            <div class="body">
+                <ul class="list">
+                    <li v-for="user in usersJoin" @click="switch_chat(user)" v-cloak>
+                        <img class="head-img" v-if="user.url" :src="user.url" />
+                        <div class="head-img" v-else></div>
+                        <div class="contact-info">
+                            <div class="nick">{{user.username}}</div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="content">
+                    <div class="content-output">
+                        <ul>
+                            <li v-for="chat in msgs" :class="chat.isSelfSend ? 'self' : ''">
+                                <div>
+                                    <img class="head-img" v-if="url" :src="url" />
+                                    <div class="head-img" v-else></div>
+                                    <div class="msg" v-html="chat.msg">{{chat.msg}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content-input">
+                        <textarea v-model="sendInfo" placeholder="说点什么" @keypress.enter="sendMsg"></textarea>
+                        <button class="close">关闭</button>
+                        <button class="send" @click="sendMsg">发送</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="/dist/vue.min.js"></script>
@@ -25,9 +55,11 @@
             el: '#app',
             data: {
                 url: 'http://localhost:3333/',
+                title: '在线聊天',
                 socket: '',
                 username: '',
                 msgs: { },
+                sendInfo: '',
                 numUsers: 0,
                 usersJoin: []
             },
@@ -46,6 +78,9 @@
                 addUser: addUser,
                 addEvent() {
                     userJoin.call(this);
+                },
+                sendMsg(event) {
+                    event.preventDefault();
                 }
             }
         })
@@ -74,6 +109,7 @@
         function userJoin() {
             this.socket.on('user joined', (data) => {
                 // 更新在线用户数消息
+                console.log(data)
                 this.usersJoin.push(data);
             })
         }
